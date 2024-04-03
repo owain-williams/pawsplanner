@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^4.29.10",
     "@prisma/client": "5.12.0",
     "@vercel/blob": "^0.22.1",
     "@vercel/postgres": "^0.8.0",
@@ -16,9 +17,11 @@
     "clsx": "^2.1.0",
     "lucide-react": "^0.364.0",
     "next": "14.1.4",
+    "next-themes": "^0.3.0",
     "prisma": "^5.12.0",
     "react": "^18",
     "react-dom": "^18",
+    "sonner": "^1.4.41",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7"
   },
