@@ -15,12 +15,13 @@ datasource db {
 }
 
 model User {
-  id        String          @id @default(cuid())
+  clerkId   String          @unique
   createdAt DateTime        @default(now())
   updatedAt DateTime        @updatedAt
-  role      String
   stripe    StripeCustomer?
   dogs      Dog[]
+
+  @@id([clerkId])
 }
 
 model StripeCustomer {
@@ -30,7 +31,7 @@ model StripeCustomer {
   email            String
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
-  user             User     @relation(fields: [userId], references: [id])
+  user             User     @relation(fields: [userId], references: [clerkId])
   userId           String   @unique
 }
 
@@ -41,7 +42,7 @@ model Dog {
   age       Int
   metadata  DogMetadata?
   bookings  Booking[]
-  owner     User         @relation(fields: [ownerId], references: [id])
+  owner     User         @relation(fields: [ownerId], references: [clerkId])
   ownerId   String
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
@@ -59,7 +60,7 @@ model Booking {
   id         String   @id @default(cuid())
   orgId      String
   dogId      String
-  Dog        Dog      @relation(fields: [dogId], references: [id])
+  dog        Dog      @relation(fields: [dogId], references: [id])
   customerId String
   startTime  DateTime
   endTime    DateTime

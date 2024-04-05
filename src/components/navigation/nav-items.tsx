@@ -36,27 +36,27 @@ export function SideNavItems({ role }: NavItemsProps) {
     },
     {
       label: "Bookings",
-      href: "/bookings",
+      href: "/dashboard/bookings",
       icon: Calendar,
-      isSelected: pathName === "/bookings",
+      isSelected: pathName === "/dashboard/bookings",
     },
     {
       label: "Customers",
-      href: "/customers",
+      href: "/dashboard/customers",
       icon: Users,
-      isSelected: pathName === "/customers",
+      isSelected: pathName === "/dashboard/customers",
     },
     {
       label: "Dogs",
-      href: "/dogs",
+      href: "/dashboard/dogs",
       icon: Dog,
-      isSelected: pathName === "/dogs",
+      isSelected: pathName === "/dashboard/dogs",
     },
     {
       label: "Settings",
-      href: "/settings",
+      href: "/dashboard/settings",
       icon: Settings,
-      isSelected: pathName === "/settings",
+      isSelected: pathName === "/dashboard/settings",
     },
   ];
   const navItemsMember: NavItem[] = [];
@@ -101,27 +101,27 @@ export function MobileNavItems({ role }: NavItemsProps) {
     },
     {
       label: "Bookings",
-      href: "/bookings",
+      href: "/dashboard/bookings",
       icon: Calendar,
-      isSelected: pathName === "/bookings",
+      isSelected: pathName === "/dashboard/bookings",
     },
     {
       label: "Customers",
-      href: "/customers",
+      href: "/dashboard/customers",
       icon: Users,
-      isSelected: pathName === "/customers",
+      isSelected: pathName === "/dashboard/customers",
     },
     {
       label: "Dogs",
-      href: "/dogs",
+      href: "/dashboard/dogs",
       icon: Dog,
-      isSelected: pathName === "/dogs",
+      isSelected: pathName === "/dashboard/dogs",
     },
     {
       label: "Settings",
-      href: "/settings",
+      href: "/dashboard/settings",
       icon: Settings,
-      isSelected: pathName === "/settings",
+      isSelected: pathName === "/dashboard/settings",
     },
   ];
   const navItemsMember: NavItem[] = [];
