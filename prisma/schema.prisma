@@ -14,12 +14,67 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
+model User {
+  id        String          @id @default(cuid())
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  role      String
+  stripe    StripeCustomer?
+  dogs      Dog[]
+}
+
 model StripeCustomer {
-  id               String    @id @default(cuid())
-  clerkId          String    @unique
-  stripeCustomerId String    @unique
-  credits          Int       @default(0)
-  planActive       Boolean   @default(false)
-  planExpires      DateTime?
-  subscriptionId   String?
+  id               String   @id @default(cuid())
+  clerkId          String   @unique
+  stripeCustomerId String   @unique
+  email            String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  user             User     @relation(fields: [userId], references: [id])
+  userId           String   @unique
+}
+
+model Dog {
+  id        String       @id @default(cuid())
+  name      String
+  breed     String
+  age       Int
+  metadata  DogMetadata?
+  bookings  Booking[]
+  owner     User         @relation(fields: [ownerId], references: [id])
+  ownerId   String
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+}
+
+model DogMetadata {
+  id        String   @id @default(cuid())
+  dogId     String   @unique
+  dog       Dog      @relation(fields: [dogId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Booking {
+  id         String   @id @default(cuid())
+  orgId      String
+  dogId      String
+  Dog        Dog      @relation(fields: [dogId], references: [id])
+  customerId String
+  startTime  DateTime
+  endTime    DateTime
+  isPaid     Boolean
+  payment    Payment? @relation(fields: [paymentId], references: [id])
+  paymentId  String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([orgId, dogId, customerId])
+}
+
+model Payment {
+  id        String    @id @default(cuid())
+  bookings  Booking[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
