@@ -39,6 +39,7 @@ model Dog {
   id        String       @id @default(cuid())
   name      String
   breed     String
+  imageUrl  String?
   age       Int
   metadata  DogMetadata?
   bookings  Booking[]
@@ -52,6 +53,7 @@ model DogMetadata {
   id        String   @id @default(cuid())
   dogId     String   @unique
   dog       Dog      @relation(fields: [dogId], references: [id])
+  dob       DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
