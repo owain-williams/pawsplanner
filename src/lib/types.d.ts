@@ -1,0 +1,1 @@
+export type OrgRole = 'org:admin' | 'org:member';

@@ -1,25 +1,47 @@
-import Link from "next/link";
-import { Home, ShoppingCart, Package, Users, LineChart } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { navItems } from "./data";
+import {
+  Calendar,
+  Dog,
+  Home,
+  LineChart,
+  Package,
+  PawPrint,
+  Settings,
+  ShoppingCart,
+  Users,
+  type LucideIcon,
+} from "lucide-react";
+import Link from "next/link";
+import { MobileNavItems, SideNavItems } from "./nav-items";
 
 type SideNavigationProps = {
-  role: string;
-}
+  role: string | null | undefined;
+};
 
-export default function SideNavigation() {
+export function SideNavigation({ role }: SideNavigationProps) {
+  if (typeof role !== "string") {
+    return (
+      <p className="grid items-start px-2 text-sm font-medium lg:px-4">
+        No Role Assigned
+      </p>
+    );
+  }
+
   return (
     <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-      {navItems.map((nav) => (
-        <Link
-          key={nav.label}
-          href={nav.href}
-          className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-        >
-          <nav.icon className="h-4 w-4" />
-          {nav.label}
-        </Link>
-      ))}
+      <SideNavItems role={role} />
+    </nav>
+  );
+}
+
+export function MobileNavigation({ role }: SideNavigationProps) {
+  if (typeof role !== "string") {
+    return;
+  }
+
+  return (
+    <nav className="grid gap-2 text-lg font-medium">
+      <MobileNavItems role={role} />
     </nav>
   );
 }
