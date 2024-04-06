@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { auth } from "@clerk/nextjs";
 import { db } from "@/lib/db";
+import Link from "next/link";
 
 export default async function DogsPage() {
   const { userId } = auth();
@@ -40,7 +41,9 @@ export default async function DogsPage() {
                   You can start making bookings as soon as you add your furry
                   friends.
                 </p>
-                <Button className="mt-4">Add Dog</Button>
+                <Button asChild className="mt-4">
+                  <Link href="/dashboard/dogs/new">Add Dog</Link>
+                </Button>
               </div>
             </>
           ) : (

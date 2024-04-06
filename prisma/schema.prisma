@@ -40,7 +40,6 @@ model Dog {
   name      String
   breed     String
   imageUrl  String?
-  age       Int
   metadata  DogMetadata?
   bookings  Booking[]
   owner     User         @relation(fields: [ownerId], references: [clerkId])
