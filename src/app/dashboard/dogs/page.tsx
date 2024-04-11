@@ -53,6 +53,9 @@ export default async function DogsPage() {
                   <li key={dog.id}>{dog.name}</li>
                 ))}
               </ul>
+              <Button asChild className="mt-4">
+                <Link href="/dashboard/dogs/new">Add Dog</Link>
+              </Button>
             </>
           )}
         </div>

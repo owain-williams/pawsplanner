@@ -39,13 +39,26 @@ model Dog {
   id        String       @id @default(cuid())
   name      String
   breed     String
-  imageUrl  String?
+  image     Image[]
   metadata  DogMetadata?
   bookings  Booking[]
   owner     User         @relation(fields: [ownerId], references: [clerkId])
   ownerId   String
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
+}
+
+model Image {
+  id                 String   @id @default(cuid())
+  contentDisposition String?
+  contentType        String?
+  downloadUrl        String?
+  pathname           String?
+  url                String?
+  dog                Dog      @relation(fields: [dogId], references: [id])
+  dogId              String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }
 
 model DogMetadata {
