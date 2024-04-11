@@ -39,8 +39,6 @@ export default function NewDogForm() {
   const inputNameRef = useRef<HTMLInputElement>(null);
   const inputBreedRef = useRef<HTMLInputElement>(null);
   const inputFileRef = useRef<HTMLInputElement>(null);
-  const [blob, setBlob] = useState<PutBlobResult | null>(null);
-  const [submitStatus, setSubmitStatus] = useState<string>("");
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -55,8 +53,7 @@ export default function NewDogForm() {
       body: file,
     });
 
-    const newBlob = (await response.json()) as PutBlobResult;
-    setBlob(newBlob);
+    const blobResult = (await response.json()) as PutBlobResult;
 
     toast.info("Image Uploaded: Saving details");
 
@@ -66,11 +63,11 @@ export default function NewDogForm() {
         name,
         breed,
         ownerId: userId!,
-        contentDisposition: newBlob.contentDisposition,
-        contentType: newBlob.contentType,
-        downloadUrl: newBlob.downloadUrl,
-        pathname: newBlob.pathname,
-        url: newBlob.url,
+        contentDisposition: blobResult.contentDisposition,
+        contentType: blobResult.contentType,
+        downloadUrl: blobResult.downloadUrl,
+        pathname: blobResult.pathname,
+        url: blobResult.url,
       }),
     });
 
