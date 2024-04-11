@@ -40,12 +40,15 @@ export default function NewDogForm() {
   const inputBreedRef = useRef<HTMLInputElement>(null);
   const inputFileRef = useRef<HTMLInputElement>(null);
   const [blob, setBlob] = useState<PutBlobResult | null>(null);
+  const [submitStatus, setSubmitStatus] = useState<string>("");
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const name = inputNameRef.current!.value;
     const breed = inputBreedRef.current!.value;
     const file = inputFileRef.current!.files![0];
+
+    toast.info("Uploading Image: Please don't navigate away");
 
     const response = await fetch(`/api/blob-upload?filename=${file.name}`, {
       method: "POST",
@@ -54,6 +57,8 @@ export default function NewDogForm() {
 
     const newBlob = (await response.json()) as PutBlobResult;
     setBlob(newBlob);
+
+    toast.info("Image Uploaded: Saving details");
 
     const addedDog = await fetch(`/api/dogs`, {
       method: "POST",
@@ -68,8 +73,10 @@ export default function NewDogForm() {
         url: newBlob.url,
       }),
     });
-    addedDog && console.log(addedDog);
-    addedDog && router.push("/dashboard");
+
+    toast.success(`${name} has been saved`);
+    router.push("/dashboard/dogs");
+    router.refresh();
   }
 
   return (
@@ -96,6 +103,7 @@ export default function NewDogForm() {
             </div>
           </div>
         </form>
+
         {/* {blob && (
           <div>
             Blob url: <a href={blob.url}>{blob.url}</a>
