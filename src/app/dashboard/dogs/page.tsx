@@ -1,11 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { auth } from "@clerk/nextjs";
 import { db } from "@/lib/db";
+import type { DogWithImageAndMetadata } from "@/lib/types";
+import { auth } from "@clerk/nextjs";
 import Link from "next/link";
 import DogDisplay from "./_components/dogdisplay";
-import { Dog, DogMetadata, Blob } from "@prisma/client";
-import { Prisma } from "@prisma/client";
-import type { DogWithImageAndMetadata } from "@/lib/types";
 
 export default async function DogsPage() {
   const { userId } = auth();

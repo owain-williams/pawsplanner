@@ -1,7 +1,7 @@
 "use client";
 
 import type { PutBlobResult } from "@vercel/blob";
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function ImageUploadButton() {
   const inputFileRef = useRef<HTMLInputElement>(null);

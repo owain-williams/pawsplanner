@@ -1,10 +1,9 @@
-import { Blob, Dog, DogMetadata, Prisma } from "@prisma/client";
 import Image from "next/image";
 
-import type { DogWithImageAndMetadata } from "@/lib/types";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import type { DogWithImageAndMetadata } from "@/lib/types";
 import { Edit } from "lucide-react";
+import Link from "next/link";
 
 type DogDisplayProps = {
   dog: DogWithImageAndMetadata;
