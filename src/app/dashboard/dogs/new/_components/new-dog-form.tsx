@@ -1,37 +1,12 @@
 "use client";
 
-import { createDog } from "@/actions/create/dog";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@clerk/nextjs";
-import { zodResolver } from "@hookform/resolvers/zod";
 import type { PutBlobResult } from "@vercel/blob";
-import { upload } from "@vercel/blob/client";
-import { useAction } from "next-safe-action/hooks";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useRef } from "react";
 import { toast } from "sonner";
-import { z } from "zod";
-
-const formSchema = z.object({
-  name: z.string().min(2).max(50),
-  breed: z.string().min(2).max(50),
-  imageFile: z.optional(
-    z
-      .instanceof(FileList)
-      .refine((file) => file?.length === 1, "File is required")
-  ),
-});
 
 export default function NewDogForm() {
   const router = useRouter();

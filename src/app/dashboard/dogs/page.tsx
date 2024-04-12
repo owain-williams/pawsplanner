@@ -2,6 +2,10 @@ import { Button } from "@/components/ui/button";
 import { auth } from "@clerk/nextjs";
 import { db } from "@/lib/db";
 import Link from "next/link";
+import DogDisplay from "./_components/dogdisplay";
+import { Dog, DogMetadata, Blob } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+import type { DogWithImageAndMetadata } from "@/lib/types";
 
 export default async function DogsPage() {
   const { userId } = auth();
@@ -9,27 +13,26 @@ export default async function DogsPage() {
     return;
   }
 
-  const dogs = await db.dog.findMany({
+  const dogs: DogWithImageAndMetadata[] = await db.dog.findMany({
     where: {
       ownerId: userId,
     },
     include: {
       metadata: true,
+      image: true,
     },
     orderBy: {
       createdAt: "asc",
     },
   });
 
-  // console.log(dogs.length);
-
   return (
     <>
       <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-lg font-semibold md:text-2xl">Dashboard</h1>
+          <h1 className="text-lg font-semibold md:text-2xl">Dogs</h1>
         </div>
-        <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
+        <div className="flex flex-1 justify-center rounded-lg shadow-sm">
           {/* IF NO DOGS HAVE BEEN ADDED */}
           {dogs.length <= 0 ? (
             <>
@@ -47,16 +50,16 @@ export default async function DogsPage() {
               </div>
             </>
           ) : (
-            <>
-              <ul>
-                {dogs.map((dog) => (
-                  <li key={dog.id}>{dog.name}</li>
-                ))}
-              </ul>
+            <div className="flex flex-col w-full">
+              {dogs.map((dog) => (
+                <div key={dog.id} className="py-2">
+                  <DogDisplay key={dog.id} dog={dog} className="py-2" />
+                </div>
+              ))}
               <Button asChild className="mt-4">
                 <Link href="/dashboard/dogs/new">Add Dog</Link>
               </Button>
-            </>
+            </div>
           )}
         </div>
       </main>

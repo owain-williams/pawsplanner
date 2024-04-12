@@ -126,7 +126,6 @@ export function MobileNavItems({ role }: NavItemsProps) {
   ];
   const navItemsMember: NavItem[] = [];
   let navItems: NavItem[];
-  console.log(role);
   switch (role) {
     case "org:admin":
       navItems = navItemsAdmin;

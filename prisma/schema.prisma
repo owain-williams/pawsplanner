@@ -39,7 +39,7 @@ model Dog {
   id        String       @id @default(cuid())
   name      String
   breed     String
-  image     Image[]
+  image     Blob[]
   metadata  DogMetadata?
   bookings  Booking[]
   owner     User         @relation(fields: [ownerId], references: [clerkId])
@@ -48,7 +48,7 @@ model Dog {
   updatedAt DateTime     @updatedAt
 }
 
-model Image {
+model Blob {
   id                 String   @id @default(cuid())
   contentDisposition String?
   contentType        String?
