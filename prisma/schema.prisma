@@ -105,6 +105,28 @@ model SlotPreset {
   @@index([orgId])
 }
 
+model Basket {
+  id        String       @id @default(cuid())
+  userId    String
+  orgId     String
+  items     BasketItem[]
+  finished  Boolean      @default(false)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+}
+
+model BasketItem {
+  id           String   @id @default(cuid())
+  dogId        String
+  orgId        String
+  date         DateTime
+  slotPresetId String
+  Basket       Basket?  @relation(fields: [basketId], references: [id])
+  basketId     String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
 model Payment {
   id        String    @id @default(cuid())
   bookings  Booking[]

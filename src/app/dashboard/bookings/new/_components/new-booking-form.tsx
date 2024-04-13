@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/popover";
 import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
-import { format } from "date-fns";
+import { format, add } from "date-fns";
 import { cn } from "@/lib/utils";
 import {
   Command,
@@ -35,23 +35,29 @@ import {
 import { useEffect, useState, useTransition } from "react";
 import { SlotPreset } from "@prisma/client";
 import getAvailableSlots from "@/actions/get-available-slots";
+import addToBasket from "@/actions/add-to-basket";
 
 const formSchema = z.object({
   dogId: z.string({ required_error: "Please select a dog" }),
-  date: z.date({ required_error: "A date is required" }),
-  slot: z.string(),
+  date: z.date({ required_error: "Please select a date" }),
+  slot: z.string({ required_error: "Please select an available slot" }),
 });
 
 type NewBookingFormProps = {
   dogs: DogWithImageAndMetadata[];
   orgId: string;
+  userId: string;
 };
 
-export default function NewBookingForm({ dogs, orgId }: NewBookingFormProps) {
+export default function NewBookingForm({
+  dogs,
+  orgId,
+  userId,
+}: NewBookingFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      date: new Date(),
+      date: add(new Date(), { days: 1 }),
     },
   });
 
@@ -63,10 +69,15 @@ export default function NewBookingForm({ dogs, orgId }: NewBookingFormProps) {
 
   useEffect(() => {
     startTransition(async () => {
-      const slots = await getAvailableSlots(selectedDate, selectedDogId, orgId);
+      const slots = await getAvailableSlots(
+        selectedDate,
+        selectedDogId,
+        orgId,
+        userId
+      );
       setAvailableSlots(slots);
     });
-  }, [selectedDate, selectedDogId, orgId]);
+  }, [selectedDate, selectedDogId, orgId, userId]);
 
   const dogsCombo = dogs.map((dog) => ({
     label: dog.name,
@@ -83,6 +94,7 @@ export default function NewBookingForm({ dogs, orgId }: NewBookingFormProps) {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    addToBasket(userId, values.dogId, values.date, values.slot, orgId);
   }
 
   return (
@@ -93,43 +105,42 @@ export default function NewBookingForm({ dogs, orgId }: NewBookingFormProps) {
           name="date"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Date</FormLabel>
-              <FormControl>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant={"outline"}
-                        className={cn(
-                          "w-[240px] pl-3 text-left font-normal",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value ? (
-                          format(field.value, "PPP")
-                        ) : (
-                          <span>Pick a date</span>
-                        )}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      disabled={(date) =>
-                        date < new Date() || date < new Date("1900-01-01")
-                      }
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
-              </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+              <div className="flex flex-col gap-y-2">
+                <FormLabel>Date</FormLabel>
+                <FormControl>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant={"outline"}
+                          className={cn(
+                            "w-[279px] pl-3 text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value ? (
+                            format(field.value, "PPP")
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) =>
+                          date < new Date() || date < new Date("1900-01-01")
+                        }
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </FormControl>
+              </div>
               <FormMessage />
             </FormItem>
           )}
@@ -147,7 +158,7 @@ export default function NewBookingForm({ dogs, orgId }: NewBookingFormProps) {
                       variant="outline"
                       role="combobox"
                       className={cn(
-                        "w-[200px] justify-between",
+                        "w-[279px] justify-between",
                         !field.value && "text-muted-foreground"
                       )}
                     >
@@ -205,7 +216,7 @@ export default function NewBookingForm({ dogs, orgId }: NewBookingFormProps) {
                       variant="outline"
                       role="combobox"
                       className={cn(
-                        "w-[200px] justify-between",
+                        "w-[279px] justify-between",
                         !field.value && "text-muted-foreground"
                       )}
                     >
