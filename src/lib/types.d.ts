@@ -1,3 +1,5 @@
+import { Prisma } from "@prisma/client";
+
 export type OrgRole = 'org:admin' | 'org:member';
 
 export type DogWithImageAndMetadata = Prisma.DogGetPayload<{
@@ -6,3 +8,9 @@ export type DogWithImageAndMetadata = Prisma.DogGetPayload<{
     image: true;
   };
 }>;
+
+export type BasketWithItems = Prisma.BasketGetPayload<{
+  include: {
+    items: true
+  }
+}>

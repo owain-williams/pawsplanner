@@ -36,6 +36,7 @@ import { useEffect, useState, useTransition } from "react";
 import { SlotPreset } from "@prisma/client";
 import getAvailableSlots from "@/actions/get-available-slots";
 import addToBasket from "@/actions/add-to-basket";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   dogId: z.string({ required_error: "Please select a dog" }),
@@ -61,6 +62,7 @@ export default function NewBookingForm({
     },
   });
 
+  const { refresh } = useRouter();
   const [isPending, startTransition] = useTransition();
   const [availableSlots, setAvailableSlots] = useState<SlotPreset[]>([]);
 
@@ -95,6 +97,7 @@ export default function NewBookingForm({
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     addToBasket(userId, values.dogId, values.date, values.slot, orgId);
+    refresh();
   }
 
   return (

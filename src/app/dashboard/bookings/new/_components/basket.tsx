@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { BasketWithItems } from "@/lib/types";
 import { ShoppingCart } from "lucide-react";
 import { useState, useEffect, useTransition } from "react";
 
@@ -18,7 +19,11 @@ type BasketItem = {
   slotId: string;
 };
 
-export default function Basket() {
+type BasketProps = {
+  basket: BasketWithItems;
+};
+
+export default function Basket({ basket }: BasketProps) {
   return (
     <Card>
       <CardHeader>
@@ -26,7 +31,15 @@ export default function Basket() {
         {/* <CardDescription>Card Description</CardDescription> */}
       </CardHeader>
       <CardContent>
-        <ScrollArea className="h-[200px]">Your Basket is empty</ScrollArea>
+        <ScrollArea className="h-[200px]">
+          {basket.items.map((item) => (
+            <div key={item.id}>
+              <h4>{item.id}</h4>
+              <p>{item.dogId}</p>
+              <p>{item.date.toDateString()}</p>
+            </div>
+          ))}
+        </ScrollArea>
       </CardContent>
       <CardFooter>
         <Button className="gap-2">

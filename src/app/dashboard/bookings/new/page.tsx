@@ -35,6 +35,16 @@ export default async function NewBookingsPage() {
   });
   console.log(dogs);
 
+  const basket = await db.basket.findFirst({
+    where: {
+      userId,
+      finished: false,
+    },
+    include: {
+      items: true,
+    },
+  });
+
   return (
     <main className="flex flex-1 flex-col gap-4 p4 lg:gap-6 lg:p-6">
       <div className="flex items-center justify-between">
@@ -52,7 +62,7 @@ export default async function NewBookingsPage() {
           </Card>
         </div>
         <div className="lg:basis-1/3">
-          <Basket />
+          <Basket basket={basket} />
         </div>
       </div>
     </main>
