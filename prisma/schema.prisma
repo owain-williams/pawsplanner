@@ -71,20 +71,38 @@ model DogMetadata {
 }
 
 model Booking {
-  id         String   @id @default(cuid())
-  orgId      String
-  dogId      String
-  dog        Dog      @relation(fields: [dogId], references: [id])
-  customerId String
-  startTime  DateTime
-  endTime    DateTime
-  isPaid     Boolean
-  payment    Payment? @relation(fields: [paymentId], references: [id])
-  paymentId  String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id           String     @id @default(cuid())
+  orgId        String
+  dogId        String
+  dog          Dog        @relation(fields: [dogId], references: [id])
+  customerId   String
+  date         DateTime
+  slot         SlotPreset @relation(fields: [slotPresetId], references: [id])
+  isPaid       Boolean
+  payment      Payment?   @relation(fields: [paymentId], references: [id])
+  paymentId    String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  slotPresetId String
 
   @@index([orgId, dogId, customerId])
+}
+
+model SlotPreset {
+  id        String   @id @default(cuid())
+  orgId     String
+  startTime String
+  endTime   String
+  price     Int
+  currency  String
+  maxDogs   Int
+  days      Int[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Booking Booking[]
+
+  @@index([orgId])
 }
 
 model Payment {

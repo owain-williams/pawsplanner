@@ -30,7 +30,7 @@ export default async function DogsPage() {
         <div className="flex items-center justify-between">
           <h1 className="text-lg font-semibold md:text-2xl">Dogs</h1>
         </div>
-        <div className="flex flex-1 justify-center rounded-lg shadow-sm">
+        <div className="flex flex-1 justify-center rounded-lg">
           {/* IF NO DOGS HAVE BEEN ADDED */}
           {dogs.length <= 0 ? (
             <>

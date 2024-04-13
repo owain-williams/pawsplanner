@@ -11,12 +11,6 @@ export default async function BookingsPage() {
   const upcomingBookings = await db.booking.findMany({
     where: {
       customerId: userId,
-      startTime: {
-        gte: new Date(),
-      },
-    },
-    orderBy: {
-      startTime: "asc",
     },
     include: {
       dog: {
