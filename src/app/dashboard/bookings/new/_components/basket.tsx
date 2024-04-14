@@ -22,6 +22,10 @@ type BasketProps = {
 export default function Basket({ basket }: BasketProps) {
   const { refresh } = useRouter();
 
+  const basketTotal = basket.items
+    .map((item) => item.slot.price)
+    .reduce((acc, curr) => acc + curr);
+
   function deleteButtonClickHandler(itemId: string) {
     deleteFromBasket(itemId);
     refresh();
@@ -59,11 +63,12 @@ export default function Basket({ basket }: BasketProps) {
           ))}
         </ScrollArea>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="flex items-center justify-between">
         <Button className="gap-2">
           <ShoppingCart className="h-4 w-4" />
           Checkout
         </Button>
+        <p>Price: {`£${(Math.round(basketTotal) / 100).toFixed(2)}`}</p>
       </CardFooter>
     </Card>
   );
