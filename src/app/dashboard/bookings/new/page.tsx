@@ -13,6 +13,7 @@ import { auth } from "@clerk/nextjs";
 import { db } from "@/lib/db";
 import { SlotPreset } from "@prisma/client";
 import Basket from "./_components/basket";
+import { BasketWithItems } from "@/lib/types";
 
 export type GetAvailableSlotsType = (date: Date, dogId: string) => SlotPreset[];
 
@@ -35,7 +36,7 @@ export default async function NewBookingsPage() {
   });
   console.log(dogs);
 
-  const basket = await db.basket.findFirst({
+  let basket = await db.basket.findFirst({
     where: {
       userId,
       finished: false,
@@ -49,6 +50,24 @@ export default async function NewBookingsPage() {
       },
     },
   });
+  let newBasket;
+  if (!basket) {
+    newBasket = await db.basket.create({
+      data: {
+        userId,
+        orgId,
+      },
+      include: {
+        items: {
+          include: {
+            dog: true,
+            slot: true,
+          },
+        },
+      },
+    });
+    basket = newBasket;
+  }
 
   return (
     <main className="flex flex-1 flex-col gap-4 p4 lg:gap-6 lg:p-6">

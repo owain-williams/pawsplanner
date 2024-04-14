@@ -51,7 +51,7 @@ export default async function DogsPage() {
             <div className="flex flex-col w-full">
               {dogs.map((dog) => (
                 <div key={dog.id} className="py-2">
-                  <DogDisplay key={dog.id} dog={dog} className="py-2" />
+                  <DogDisplay key={dog.id} dog={dog} />
                 </div>
               ))}
               <Button asChild className="mt-4">

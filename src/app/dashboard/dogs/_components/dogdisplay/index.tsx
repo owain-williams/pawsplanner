@@ -9,7 +9,7 @@ type DogDisplayProps = {
   dog: DogWithImageAndMetadata;
 };
 
-export default function DogDisplay({ dog }: DogWithImageAndMetadata) {
+export default function DogDisplay({ dog }: DogDisplayProps) {
   return (
     <div className="flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
       <div className="justify-between flex items-center gap-6">
