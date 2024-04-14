@@ -72,7 +72,7 @@ export default async function NewBookingsPage() {
   return (
     <main className="flex flex-1 flex-col gap-4 p4 lg:gap-6 lg:p-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-lg font-semibold md:text-2xl">New Bookings</h1>
+        <h1 className="mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">New Bookings</h1>
       </div>
       <div className="flex flex-col gap-4 lg:flex-row">
         <div className="lg:basis-2/3">

@@ -29,6 +29,7 @@ model StripeCustomer {
   clerkId          String   @unique
   stripeCustomerId String   @unique
   email            String
+  businessType     String?
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
   user             User     @relation(fields: [userId], references: [clerkId])
@@ -63,12 +64,29 @@ model Blob {
 }
 
 model DogMetadata {
-  id        String   @id @default(cuid())
-  dogId     String   @unique
-  dog       Dog      @relation(fields: [dogId], references: [id])
-  dob       DateTime
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                      String              @id @default(cuid())
+  dogId                   String              @unique
+  dog                     Dog                 @relation(fields: [dogId], references: [id])
+  dob                     DateTime
+  vaccinationRecords      VaccinationRecord[]
+  vetName                 String?
+  vetPhone                String?
+  vetAddress              String?
+  emergencyContactName    String?
+  emergencyContactPhone   String?
+  emergencyContactAddress String?
+  createdAt               DateTime            @default(now())
+  updatedAt               DateTime            @updatedAt
+}
+
+model VaccinationRecord {
+  id        String      @id @default(cuid())
+  dogId     String
+  dog       DogMetadata @relation(fields: [dogId], references: [id])
+  name      String
+  date      DateTime
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 }
 
 model Booking {

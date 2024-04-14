@@ -13,6 +13,9 @@ export async function POST(req: NextRequest) {
       individual: {
         email,
       },
+      metadata: {
+        clerkId: userId,
+      },
     });
     const accountLink: Stripe.AccountLink = await stripe.accountLinks.create({
       account: account.id,

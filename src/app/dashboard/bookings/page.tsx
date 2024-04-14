@@ -24,7 +24,9 @@ export default async function BookingsPage() {
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
       <div className="flex items-center">
-        <h1 className="text-lg font-semibold md:text-2xl">Bookings</h1>
+        <h1 className="mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
+          Bookings
+        </h1>
       </div>
       <div className="flex flex-col rounded-lg ">
         <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
