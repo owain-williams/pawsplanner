@@ -99,6 +99,7 @@ export default function NewBookingForm({
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     addToBasket(userId, values.dogId, values.date, values.slot, orgId);
+    form.reset();
     refresh();
   }
 

@@ -49,7 +49,12 @@ export default async function getAvailableSlots(date: Date, dogId: string, orgId
 
   // Filter out slots that the dog is currently booked in for
   const dogIsBooked = bookings.filter((booking) => {
-    return booking.dogId === dogId
+    if (booking.dogId === dogId) {
+      return true
+    } else {
+      return false
+    }
+
   })
   console.log(dogIsBooked)
 
@@ -61,9 +66,13 @@ export default async function getAvailableSlots(date: Date, dogId: string, orgId
   })
   console.log(filteredSlots)
 
-  // TODO: Filter out slots that the dog is currently booked in for IN BASKET
+  // Filter out slots that the dog is currently booked in for IN BASKET
   const dogIsInBasket = basket?.items.filter((item) => {
-    return item.dogId === dogId
+    if (item.dogId == dogId && item.date.getDate() === date.getDate()) {
+      return true
+    } else {
+      return false
+    }
   })
   console.log(dogIsInBasket)
 

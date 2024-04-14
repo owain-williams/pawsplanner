@@ -25,7 +25,7 @@ export default function Basket({ basket }: BasketProps) {
 
   const basketTotal = basket.items
     .map((item) => item.slot.price)
-    .reduce((acc, curr) => acc + curr);
+    .reduce((acc, curr) => acc + curr, 0);
 
   function deleteButtonClickHandler(itemId: string) {
     deleteFromBasket(itemId);
