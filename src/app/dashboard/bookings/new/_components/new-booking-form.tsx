@@ -87,7 +87,9 @@ export default function NewBookingForm({
   }));
 
   const slotsCombo = availableSlots.map((slot) => ({
-    label: `£${slot.price} - ${slot.startTime} to ${slot.endTime}`,
+    label: `£${(Math.round(slot.price) / 100).toFixed(2)} - ${
+      slot.startTime
+    } to ${slot.endTime}`,
     value: slot.id,
   }));
 
