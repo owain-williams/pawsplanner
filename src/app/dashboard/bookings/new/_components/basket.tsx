@@ -14,7 +14,6 @@ import { Separator } from "@/components/ui/separator";
 import { BasketWithItems } from "@/lib/types";
 import { ShoppingCart, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import getDogNameFromId from "@/actions/get-dog-name-from-id";
 
 type BasketProps = {
   basket: BasketWithItems;
@@ -23,7 +22,7 @@ type BasketProps = {
 export default function Basket({ basket }: BasketProps) {
   const { refresh } = useRouter();
 
-  function clickHandler(itemId: string) {
+  function deleteButtonClickHandler(itemId: string) {
     deleteFromBasket(itemId);
     refresh();
   }
@@ -47,7 +46,11 @@ export default function Basket({ basket }: BasketProps) {
                 <div>
                   <p>{`£${item.slot.price}`}</p>
                 </div>
-                <Button size={"icon"} onClick={() => clickHandler(item.id)}>
+                <Button
+                  size={"icon"}
+                  variant={"outline"}
+                  onClick={() => deleteButtonClickHandler(item.id)}
+                >
                   <Trash2 className="h-4 w-4" />
                 </Button>
               </div>
