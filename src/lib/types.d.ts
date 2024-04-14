@@ -11,6 +11,11 @@ export type DogWithImageAndMetadata = Prisma.DogGetPayload<{
 
 export type BasketWithItems = Prisma.BasketGetPayload<{
   include: {
-    items: true
+    items: {
+      include: {
+        dog: true,
+        slot: true,
+      },
+    },
   }
 }>

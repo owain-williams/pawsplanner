@@ -36,16 +36,17 @@ model StripeCustomer {
 }
 
 model Dog {
-  id        String       @id @default(cuid())
-  name      String
-  breed     String
-  image     Blob[]
-  metadata  DogMetadata?
-  bookings  Booking[]
-  owner     User         @relation(fields: [ownerId], references: [clerkId])
-  ownerId   String
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
+  id         String       @id @default(cuid())
+  name       String
+  breed      String
+  image      Blob[]
+  metadata   DogMetadata?
+  bookings   Booking[]
+  owner      User         @relation(fields: [ownerId], references: [clerkId])
+  ownerId    String
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  BasketItem BasketItem[]
 }
 
 model Blob {
@@ -100,7 +101,8 @@ model SlotPreset {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  Booking Booking[]
+  Booking    Booking[]
+  BasketItem BasketItem[]
 
   @@index([orgId])
 }
@@ -116,15 +118,17 @@ model Basket {
 }
 
 model BasketItem {
-  id           String   @id @default(cuid())
+  id           String     @id @default(cuid())
   dogId        String
+  dog          Dog        @relation(fields: [dogId], references: [id])
   orgId        String
   date         DateTime
   slotPresetId String
-  Basket       Basket?  @relation(fields: [basketId], references: [id])
+  slot         SlotPreset @relation(fields: [slotPresetId], references: [id])
+  Basket       Basket?    @relation(fields: [basketId], references: [id])
   basketId     String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
 }
 
 model Payment {

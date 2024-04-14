@@ -41,7 +41,12 @@ export default async function NewBookingsPage() {
       finished: false,
     },
     include: {
-      items: true,
+      items: {
+        include: {
+          dog: true,
+          slot: true,
+        },
+      },
     },
   });
 
