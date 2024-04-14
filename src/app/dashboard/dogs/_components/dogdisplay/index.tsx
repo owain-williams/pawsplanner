@@ -17,7 +17,7 @@ export default function DogDisplay({ dog }: DogDisplayProps) {
           alt="Dog"
           className="rounded-full object-cover w-24 h-24"
           height={100}
-          src={`/api/image?url=${dog.image[0].url}`}
+          src={`${dog.image[0].url}`}
           style={{
             aspectRatio: "100/100",
             objectFit: "cover",
