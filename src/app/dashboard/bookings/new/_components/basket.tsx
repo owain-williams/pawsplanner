@@ -44,7 +44,7 @@ export default function Basket({ basket }: BasketProps) {
                   <p>{`${item.slot.startTime} - ${item.slot.endTime}`}</p>
                 </div>
                 <div>
-                  <p>{`£${item.slot.price}`}</p>
+                  <p>{`£${(Math.round(item.slot.price) / 100).toFixed(2)}`}</p>
                 </div>
                 <Button
                   size={"icon"}
