@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import {
   Calendar,
+  ClipboardPenLine,
   Dog,
   Home,
   LucideIcon,
@@ -37,7 +38,7 @@ export function SideNavItems({ role }: NavItemsProps) {
       label: "Bookings",
       href: "/dashboard/bookings",
       icon: Calendar,
-      isSelected: pathName === "/dashboard/bookings",
+      isSelected: pathName.startsWith("/dashboard/bookings"),
     },
     {
       label: "Customers",
@@ -49,7 +50,13 @@ export function SideNavItems({ role }: NavItemsProps) {
       label: "Dogs",
       href: "/dashboard/dogs",
       icon: Dog,
-      isSelected: pathName === "/dashboard/dogs",
+      isSelected: pathName.startsWith("/dashboard/dogs"),
+    },
+    {
+      label: "Services",
+      href: "/dashboard/services",
+      icon: ClipboardPenLine,
+      isSelected: pathName.startsWith("/dashboard/services"),
     },
     {
       label: "Settings",
