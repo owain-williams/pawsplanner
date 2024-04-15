@@ -69,7 +69,12 @@ export default function NewDogForm() {
           </div>
           <div className="py-2">
             <label htmlFor="file">Dog&apos;s Avatar</label>
-            <Input name="file" ref={inputFileRef} type="file" />
+            <Input
+              name="file"
+              ref={inputFileRef}
+              type="file"
+              accept="image/*"
+            />
             <div className="py-2">
               <Button type="submit">Submit</Button>
             </div>
