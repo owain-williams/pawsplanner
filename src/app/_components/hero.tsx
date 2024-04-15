@@ -20,7 +20,10 @@ export default function Hero() {
             </div>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
               <Button asChild>
-                <Link href="#">Sign Up</Link>
+                <Link href="/sign-up">Sign Up</Link>
+              </Button>
+              <Button asChild variant={"outline"}>
+                <Link href="/sign-in">Sign In</Link>
               </Button>
               <Button asChild variant={"secondary"}>
                 <Link href="/contact">Request a Demo</Link>
