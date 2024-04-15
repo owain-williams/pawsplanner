@@ -36,9 +36,9 @@ export default async function AdminDashboardPage() {
               <TableCell className="font-medium">{acc.id}</TableCell>
               <TableCell>{acc.email}</TableCell>
               <TableCell>{acc.metadata?.clerkId}</TableCell>
-              <TableCell>{acc.payouts_enabled}</TableCell>
+              <TableCell>{acc.payouts_enabled ? "Yes" : "No"}</TableCell>
               <TableCell className="text-right">
-                {acc.details_submitted}
+                {acc.details_submitted ? "Yes" : "No"}
               </TableCell>
             </TableRow>
           ))}
