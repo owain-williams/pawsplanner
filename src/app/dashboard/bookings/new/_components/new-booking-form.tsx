@@ -33,7 +33,7 @@ import {
   CommandItem,
 } from "@/components/ui/command";
 import { useEffect, useState, useTransition } from "react";
-import { SlotPreset } from "@prisma/client";
+import { Service } from "@prisma/client";
 import getAvailableSlots from "@/actions/get-available-slots";
 import addToBasket from "@/actions/add-to-basket";
 import { useRouter } from "next/navigation";
@@ -64,7 +64,7 @@ export default function NewBookingForm({
 
   const { refresh } = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [availableSlots, setAvailableSlots] = useState<SlotPreset[]>([]);
+  const [availableSlots, setAvailableSlots] = useState<Service[]>([]);
 
   const selectedDate = form.watch("date");
   const selectedDogId = form.watch("dogId");

@@ -1,11 +1,11 @@
 'use server'
 
 import { db } from "@/lib/db";
-import { SlotPreset } from "@prisma/client";
+import { Service } from "@prisma/client";
 import { log } from "console";
 import { add } from "date-fns";
 
-export default async function getAvailableSlots(date: Date, dogId: string, orgId: string, userId: string): Promise<SlotPreset[]> {
+export default async function getAvailableSlots(date: Date, dogId: string, orgId: string, userId: string): Promise<Service[]> {
   /** THIS IS STUPID
    *  Date Picker brings back 11pm from the day before the selected date
    * This should be fixed at source, and this line removed
@@ -19,7 +19,7 @@ export default async function getAvailableSlots(date: Date, dogId: string, orgId
       date
     }
   })
-  const slots = await db.slotPreset.findMany({
+  const slots = await db.service.findMany({
     where: {
       orgId
     }
@@ -42,10 +42,10 @@ export default async function getAvailableSlots(date: Date, dogId: string, orgId
 
 
   // Filter out slots that aren't available on the selected day
-  let filteredSlots = slots.filter((slot) => {
-    return slot.days.includes(date.getDay())
+  let filteredServices = slots.filter((service) => {
+    return service.days.includes(date.getDay())
   })
-  console.log(filteredSlots)
+  console.log(filteredServices)
 
   // Filter out slots that the dog is currently booked in for
   const dogIsBooked = bookings.filter((booking) => {
@@ -58,13 +58,13 @@ export default async function getAvailableSlots(date: Date, dogId: string, orgId
   })
   console.log(dogIsBooked)
 
-  let badSlots = dogIsBooked.map((booking) => (booking.slotPresetId))
+  let badSlots = dogIsBooked.map((booking) => (booking.serviceId))
   console.log(badSlots)
 
-  filteredSlots = filteredSlots.filter((slot) => {
-    return !badSlots.includes(slot.id)
+  filteredServices = filteredServices.filter((service) => {
+    return !badSlots.includes(service.id)
   })
-  console.log(filteredSlots)
+  console.log(filteredServices)
 
   // Filter out slots that the dog is currently booked in for IN BASKET
   const dogIsInBasket = basket?.items.filter((item) => {
@@ -76,13 +76,13 @@ export default async function getAvailableSlots(date: Date, dogId: string, orgId
   })
   console.log(dogIsInBasket)
 
-  const badSlotsBasket = dogIsInBasket?.map((item) => (item.slotPresetId))
+  const badSlotsBasket = dogIsInBasket?.map((item) => (item.serviceId))
   console.log(badSlotsBasket)
 
-  filteredSlots = filteredSlots.filter((slot) => {
+  filteredServices = filteredServices.filter((slot) => {
     return !badSlotsBasket?.includes(slot.id)
   })
   // TODO: Filter out slots that are over capacity
 
-  return filteredSlots;
+  return filteredServices;
 }

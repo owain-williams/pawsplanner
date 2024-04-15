@@ -1,10 +1,10 @@
 'use server'
 
-import { Basket, SlotPreset } from "@prisma/client";
+import { Basket, Service } from "@prisma/client";
 import { db } from "@/lib/db";
 import { add } from "date-fns";
 
-export default async function addToBasket(userId: string, dogId: string, date: Date, slotPresetId: string, orgId: string) {
+export default async function addToBasket(userId: string, dogId: string, date: Date, serviceId: string, orgId: string) {
   date = add(date, { hours: 1 });
   let basket: Basket | null = null;
   // Find a basket
@@ -30,7 +30,7 @@ export default async function addToBasket(userId: string, dogId: string, date: D
     data: {
       dogId,
       date,
-      slotPresetId,
+      serviceId,
       orgId,
       basketId: basket.id
     }

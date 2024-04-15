@@ -11,11 +11,11 @@ import { ShoppingCart } from "lucide-react";
 import NewBookingForm from "./_components/new-booking-form";
 import { auth } from "@clerk/nextjs";
 import { db } from "@/lib/db";
-import { SlotPreset } from "@prisma/client";
+import { Service } from "@prisma/client";
 import Basket from "./_components/basket";
 import { BasketWithItems } from "@/lib/types";
 
-export type GetAvailableSlotsType = (date: Date, dogId: string) => SlotPreset[];
+export type GetAvailableSlotsType = (date: Date, dogId: string) => Service[];
 
 export default async function NewBookingsPage() {
   const { userId, orgId } = auth();

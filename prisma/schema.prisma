@@ -88,34 +88,36 @@ model VaccinationRecord {
 }
 
 model Booking {
-  id           String     @id @default(cuid())
-  orgId        String
-  dogId        String
-  dog          Dog        @relation(fields: [dogId], references: [id])
-  customerId   String
-  date         DateTime
-  slot         SlotPreset @relation(fields: [slotPresetId], references: [id])
-  isPaid       Boolean
-  payment      Payment?   @relation(fields: [paymentId], references: [id])
-  paymentId    String?
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  slotPresetId String
+  id         String   @id @default(cuid())
+  orgId      String
+  dogId      String
+  dog        Dog      @relation(fields: [dogId], references: [id])
+  customerId String
+  date       DateTime
+  slot       Service  @relation(fields: [serviceId], references: [id])
+  isPaid     Boolean
+  payment    Payment? @relation(fields: [paymentId], references: [id])
+  paymentId  String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  serviceId  String
 
   @@index([orgId, dogId, customerId])
 }
 
-model SlotPreset {
-  id        String   @id @default(cuid())
-  orgId     String
-  startTime String
-  endTime   String
-  price     Int
-  currency  String
-  maxDogs   Int
-  days      Int[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Service {
+  id              String   @id @default(cuid())
+  orgId           String
+  startTime       String
+  endTime         String
+  price           Int
+  currency        String
+  maxDogs         Int
+  days            Int[]
+  stripeProductId String?
+  stripePriceId   String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   Booking    Booking[]
   BasketItem BasketItem[]
@@ -134,17 +136,17 @@ model Basket {
 }
 
 model BasketItem {
-  id           String     @id @default(cuid())
-  dogId        String
-  dog          Dog        @relation(fields: [dogId], references: [id])
-  orgId        String
-  date         DateTime
-  slotPresetId String
-  slot         SlotPreset @relation(fields: [slotPresetId], references: [id])
-  Basket       Basket?    @relation(fields: [basketId], references: [id])
-  basketId     String?
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  id        String   @id @default(cuid())
+  dogId     String
+  dog       Dog      @relation(fields: [dogId], references: [id])
+  orgId     String
+  date      DateTime
+  serviceId String
+  slot      Service  @relation(fields: [serviceId], references: [id])
+  Basket    Basket?  @relation(fields: [basketId], references: [id])
+  basketId  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Payment {
