@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
+import Link from "next/link";
 
 export default async function BookingsPage() {
   const { orgId, userId } = auth();
@@ -28,6 +29,9 @@ export default async function BookingsPage() {
           Bookings
         </h1>
       </div>
+      <Button asChild>
+        <Link href={"/dashboard/bookings/new"}>+ New</Link>
+      </Button>
       <div className="flex flex-col rounded-lg ">
         <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
           Upcoming Bookings
