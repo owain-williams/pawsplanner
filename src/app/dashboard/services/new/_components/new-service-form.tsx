@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { auth } from "@clerk/nextjs";
+import { useAuth } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { data } from "currency-codes";
 import { Check, ChevronsUpDown } from "lucide-react";
@@ -90,7 +90,7 @@ export default function NewServiceForm() {
     },
   });
 
-  const { orgId } = auth();
+  const { orgId } = useAuth();
   if (!orgId) {
     return;
   }

@@ -3,10 +3,8 @@ import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 
 export default async function TempPage() {
-  const { userId, orgRole } = auth();
-  if (!userId) {
-    return;
-  }
+  const { userId } = auth();
+  if (!userId) return;
   const dbUser = await db.user.findUnique({
     where: {
       clerkId: userId,

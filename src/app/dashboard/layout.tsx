@@ -1,6 +1,4 @@
-import { Bell, Menu, PawPrint, Search } from "lucide-react";
-import Link from "next/link";
-
+import { MobileNavigation, SideNavigation } from "@/components/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,9 +9,9 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-
-import { MobileNavigation, SideNavigation } from "@/components/navigation";
 import { UserButton, auth, clerkClient } from "@clerk/nextjs";
+import { Bell, Menu, PawPrint, Search } from "lucide-react";
+import Link from "next/link";
 
 export default async function DashboardLayout({
   children,
@@ -21,9 +19,12 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }>) {
   const { orgId, orgRole } = auth();
-  const orgName = await clerkClient.organizations.getOrganization({
-    organizationId: orgId || "",
-  });
+  console.log(orgId, orgRole);
+  if (!orgId) return;
+  const orgName =
+    (await clerkClient.organizations.getOrganization({
+      organizationId: orgId || "",
+    })) || "Org Name";
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
@@ -32,7 +33,7 @@ export default async function DashboardLayout({
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
             <Link href="/" className="flex items-center gap-2 font-semibold">
               <PawPrint className="h-6 w-6" />
-              <span className="">{orgName.name}</span>
+              {/* <span className="">{orgName.name}</span> */}
             </Link>
             <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
               <Bell className="h-4 w-4" />
@@ -40,7 +41,8 @@ export default async function DashboardLayout({
             </Button>
           </div>
           <div className="flex-1">
-            <SideNavigation role={orgRole} />
+            {/* <SideNavigation role={orgRole} /> */}
+            <SideNavigation role={"admin"} />
           </div>
           <div className="mt-auto p-4">
             <Card>
@@ -74,7 +76,8 @@ export default async function DashboardLayout({
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="flex flex-col">
-              <MobileNavigation role={orgRole} />
+              {/* <MobileNavigation role={orgRole} /> */}
+              <MobileNavigation role={"admin"} />
               <div className="mt-auto">
                 <Card>
                   <CardHeader>

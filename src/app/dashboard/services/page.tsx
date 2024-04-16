@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import Link from "next/link";
@@ -21,8 +22,12 @@ export default async function ServicesPage() {
       </Button>
       {services.map((service) => (
         <div key={service.id}>
+          <p>{`${service.id}`}</p>
           <p>{`${service.startTime} to ${service.endTime}`}</p>
           <p>{`${service.price} ${service.currency}`}</p>
+          <p>{`${service.stripeProductId}`}</p>
+          <p>{`${service.stripePriceId}`}</p>
+          <Separator />
         </div>
       ))}
     </main>
