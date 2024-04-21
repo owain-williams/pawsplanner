@@ -11,11 +11,10 @@ export default function Hero() {
           <div className="flex flex-col justify-center space-y-4">
             <div className="space-y-2">
               <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                Simplify Your Dog Walking Business
+                Book More Walks, Worry Less: We&apos;ve Got the Admin Covered!
               </h1>
               <p className="max-w-[600px] text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Our booking system is designed to make managing your dog walking
-                or doggie day care business a breeze.
+                Pawsplanner Makes Your Dog Walking Business a Walk in the Park!
               </p>
             </div>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
