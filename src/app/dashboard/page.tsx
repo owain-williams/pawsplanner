@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 
 export default async function TempPage() {
-  const { userId } = auth();
+  const { userId, user } = auth();
   if (!userId) return;
   const dbUser = await db.user.findUnique({
     where: {
@@ -11,9 +11,15 @@ export default async function TempPage() {
     },
   });
   if (!dbUser) {
+    const invites = await db.invitedCustomer.findUnique({
+      where: {
+        email: user?.emailAddresses[0].emailAddress.toString() || "",
+      },
+    });
     await db.user.create({
       data: {
         clerkId: userId,
+        orgId: invites?.orgId || "",
       },
     });
   }
