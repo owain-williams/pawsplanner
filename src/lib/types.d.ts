@@ -13,7 +13,11 @@ export type BasketWithItems = Prisma.BasketGetPayload<{
   include: {
     items: {
       include: {
-        dog: true,
+        dog: {
+          include: {
+            image: true
+          }
+        },
         slot: true,
       },
     },

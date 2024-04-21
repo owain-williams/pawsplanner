@@ -7,13 +7,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { ShoppingCart } from "lucide-react";
-import NewBookingForm from "./_components/new-booking-form";
-import { auth } from "@clerk/nextjs";
 import { db } from "@/lib/db";
-import { Service } from "@prisma/client";
-import Basket from "./_components/basket";
 import { BasketWithItems } from "@/lib/types";
+import { auth } from "@clerk/nextjs";
+import { Service } from "@prisma/client";
+import { ShoppingCart } from "lucide-react";
+
+import Basket from "./_components/basket";
+import NewBookingForm from "./_components/new-booking-form";
 
 export type GetAvailableSlotsType = (date: Date, dogId: string) => Service[];
 
@@ -44,7 +45,11 @@ export default async function NewBookingsPage() {
     include: {
       items: {
         include: {
-          dog: true,
+          dog: {
+            include: {
+              image: true,
+            },
+          },
           slot: true,
         },
       },
@@ -60,7 +65,11 @@ export default async function NewBookingsPage() {
       include: {
         items: {
           include: {
-            dog: true,
+            dog: {
+              include: {
+                image: true,
+              },
+            },
             slot: true,
           },
         },
@@ -70,9 +79,11 @@ export default async function NewBookingsPage() {
   }
 
   return (
-    <main className="flex flex-1 flex-col gap-4 p4 lg:gap-6 lg:p-6">
+    <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
       <div className="flex items-center justify-between">
-        <h1 className="mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">New Bookings</h1>
+        <h1 className="mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
+          New Bookings
+        </h1>
       </div>
       <div className="flex flex-col gap-4 lg:flex-row">
         <div className="lg:basis-2/3">

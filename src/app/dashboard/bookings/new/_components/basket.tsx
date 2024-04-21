@@ -1,6 +1,7 @@
 "use client";
 
 import deleteFromBasket from "@/actions/delete-from-basket";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,9 +13,9 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { BasketWithItems } from "@/lib/types";
+import { format } from "date-fns";
 import { ShoppingCart, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { format } from "date-fns";
 
 type BasketProps = {
   basket: BasketWithItems;
@@ -41,19 +42,26 @@ export default function Basket({ basket }: BasketProps) {
       <CardContent>
         <ScrollArea className="h-[586px] border border-dashed rounded-md px-2 py-1">
           {basket.items.map((item) => (
-            <div key={item.id}>
+            <div key={item.id} className="p-2">
               <div className="flex items-center justify-between">
-                <div className="flex flex-col items-center justify-normal">
+                <div className="flex flex-row gap-4 items-center justify-normal">
+                  <Avatar>
+                    <AvatarImage src={item.dog.image[0].url!} />
+                    <AvatarFallback>DOG</AvatarFallback>
+                  </Avatar>
+
                   <p>
                     <strong>{item.dog.name}</strong>
                   </p>
-                  <p>{format(item.date, "EEE do LLL")}</p>
-                  <p>{`${item.slot.startTime} - ${item.slot.endTime}`}</p>
+                  <div className="flex flex-col">
+                    <p>{format(item.date, "EEE do LLL")}</p>
+                    <p>{`${item.slot.startTime} - ${item.slot.endTime}`}</p>
+                  </div>
                 </div>
                 <div className="flex items-center gap-4">
                   <div>
                     <p>{`£${(Math.round(item.slot.price) / 100).toFixed(
-                      2
+                      2,
                     )}`}</p>
                   </div>
                   <Button
@@ -65,7 +73,7 @@ export default function Basket({ basket }: BasketProps) {
                   </Button>
                 </div>
               </div>
-              <Separator />
+              <Separator className="mt-2" />
             </div>
           ))}
         </ScrollArea>
