@@ -102,7 +102,7 @@ export default function NewServiceForm() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     setSubmitting(true);
-    toast.loading("Creating Service");
+    toast.info("Creating Service");
     console.log(values);
 
     createService(orgId!, values);
