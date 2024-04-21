@@ -31,7 +31,9 @@ import { useAuth } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { data } from "currency-codes";
 import { Check, ChevronsUpDown } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -83,6 +85,7 @@ const cc = data.map((cc) => ({
 }));
 
 export default function NewServiceForm() {
+  const [submitting, setSubmitting] = useState<boolean>(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -98,8 +101,14 @@ export default function NewServiceForm() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
+    setSubmitting(true);
+    toast.loading("Creating Service");
     console.log(values);
+
     createService(orgId!, values);
+    setSubmitting(false);
+    toast.success("Service Created!");
+    form.reset();
   }
 
   return (
@@ -112,7 +121,7 @@ export default function NewServiceForm() {
             <FormItem>
               <FormLabel>Start Time</FormLabel>
               <FormControl>
-                <Input {...field} type="time" />
+                <Input disabled={submitting} {...field} type="time" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -125,7 +134,7 @@ export default function NewServiceForm() {
             <FormItem>
               <FormLabel>End Time</FormLabel>
               <FormControl>
-                <Input {...field} type="time" />
+                <Input disabled={submitting} {...field} type="time" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -138,7 +147,7 @@ export default function NewServiceForm() {
             <FormItem>
               <FormLabel>Capacity</FormLabel>
               <FormControl>
-                <Input type="number" {...field} />
+                <Input disabled={submitting} type="number" {...field} />
               </FormControl>
               <FormDescription>
                 This is maximum amount of dogs in this session.
@@ -154,7 +163,12 @@ export default function NewServiceForm() {
             <FormItem>
               <FormLabel>Price</FormLabel>
               <FormControl>
-                <Input type="number" step="any" {...field} />
+                <Input
+                  disabled={submitting}
+                  type="number"
+                  step="any"
+                  {...field}
+                />
               </FormControl>
               <FormDescription>
                 This is cost for one dog to occupy a space in this session.
@@ -173,6 +187,7 @@ export default function NewServiceForm() {
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
+                      disabled={submitting}
                       variant="outline"
                       role="combobox"
                       className={cn(
@@ -247,6 +262,7 @@ export default function NewServiceForm() {
                       >
                         <FormControl>
                           <Checkbox
+                            disabled={submitting}
                             checked={field.value?.includes(day.id)}
                             onCheckedChange={(checked) => {
                               return checked
@@ -271,7 +287,9 @@ export default function NewServiceForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button disabled={submitting} type="submit">
+          Submit
+        </Button>
       </form>
     </Form>
   );
