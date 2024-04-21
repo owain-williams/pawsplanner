@@ -42,7 +42,7 @@ export default async function DashboardLayout({
           </div>
           <div className="flex-1">
             <SideNavigation role={orgRole} />
-            <SideNavigation role={"admin"} />
+            {/* <SideNavigation role={"admin"} /> */}
           </div>
           <div className="mt-auto p-4">
             <Card>

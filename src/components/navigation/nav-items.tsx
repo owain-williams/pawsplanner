@@ -65,7 +65,26 @@ export function SideNavItems({ role }: NavItemsProps) {
       isSelected: pathName === "/dashboard/settings",
     },
   ];
-  const navItemsMember: NavItem[] = [];
+  const navItemsMember: NavItem[] = [
+    {
+      label: "Dashboard",
+      href: "/dashboard",
+      icon: Home,
+      isSelected: pathName === "/dashboard",
+    },
+    {
+      label: "Bookings",
+      href: "/dashboard/bookings",
+      icon: Calendar,
+      isSelected: pathName.startsWith("/dashboard/bookings"),
+    },
+    {
+      label: "Dogs",
+      href: "/dashboard/dogs",
+      icon: Dog,
+      isSelected: pathName.startsWith("/dashboard/dogs"),
+    },
+  ];
   let navItems: NavItem[];
   switch (role) {
     case "org:admin":
@@ -130,7 +149,26 @@ export function MobileNavItems({ role }: NavItemsProps) {
       isSelected: pathName === "/dashboard/settings",
     },
   ];
-  const navItemsMember: NavItem[] = [];
+  const navItemsMember: NavItem[] = [
+    {
+      label: "Dashboard",
+      href: "/dashboard",
+      icon: Home,
+      isSelected: pathName === "/dashboard",
+    },
+    {
+      label: "Bookings",
+      href: "/dashboard/bookings",
+      icon: Calendar,
+      isSelected: pathName === "/dashboard/bookings",
+    },
+    {
+      label: "Dogs",
+      href: "/dashboard/dogs",
+      icon: Dog,
+      isSelected: pathName === "/dashboard/dogs",
+    },
+  ];
   let navItems: NavItem[];
   switch (role) {
     case "org:admin":
