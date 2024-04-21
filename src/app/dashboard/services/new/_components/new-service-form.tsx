@@ -31,6 +31,7 @@ import { useAuth } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { data } from "currency-codes";
 import { Check, ChevronsUpDown } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -86,6 +87,7 @@ const cc = data.map((cc) => ({
 
 export default function NewServiceForm() {
   const [submitting, setSubmitting] = useState<boolean>(false);
+  const { refresh } = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -109,6 +111,7 @@ export default function NewServiceForm() {
     setSubmitting(false);
     toast.success("Service Created!");
     form.reset();
+    refresh();
   }
 
   return (
