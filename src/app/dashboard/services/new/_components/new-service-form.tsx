@@ -34,7 +34,6 @@ import { Check, ChevronsUpDown } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -104,12 +103,8 @@ export default function NewServiceForm() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     setSubmitting(true);
-    toast.info("Creating Service");
-    console.log(values);
-
     createService(orgId!, values);
     setSubmitting(false);
-    toast.success("Service Created!");
     form.reset();
     refresh();
   }
