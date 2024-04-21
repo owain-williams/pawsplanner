@@ -90,6 +90,11 @@ export default function NewServiceForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      startTime: undefined,
+      endTime: undefined,
+      maxDogs: undefined,
+      price: undefined,
+      currency: undefined,
       days: [],
     },
   });
