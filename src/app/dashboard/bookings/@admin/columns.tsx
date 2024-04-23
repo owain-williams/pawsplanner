@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -25,7 +25,17 @@ export type Booking = {
 export const columns: ColumnDef<Booking>[] = [
   {
     accessorKey: "date",
-    header: "Date",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Date
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "slot",
