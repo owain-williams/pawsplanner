@@ -43,17 +43,19 @@ model StripeCustomer {
 }
 
 model Dog {
-  id         String       @id @default(cuid())
-  name       String
-  breed      String
-  image      Blob[]
-  metadata   DogMetadata?
-  bookings   Booking[]
-  owner      User         @relation(fields: [ownerId], references: [clerkId])
-  ownerId    String
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  BasketItem BasketItem[]
+  id           String       @id @default(cuid())
+  name         String
+  breed        String
+  canBook      Boolean      @default(false)
+  canBookUntil DateTime?
+  image        Blob[]
+  metadata     DogMetadata?
+  bookings     Booking[]
+  owner        User         @relation(fields: [ownerId], references: [clerkId])
+  ownerId      String
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  BasketItem   BasketItem[]
 }
 
 model Blob {
@@ -90,7 +92,8 @@ model VaccinationRecord {
   dogId     String
   dog       DogMetadata @relation(fields: [dogId], references: [id])
   name      String
-  date      DateTime
+  from      DateTime
+  expires   DateTime
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
 }
