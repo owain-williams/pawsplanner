@@ -10,7 +10,7 @@ import { toast } from "sonner";
 
 export default function NewDogForm() {
   const router = useRouter();
-  const { userId } = useAuth();
+  const { userId, orgId } = useAuth();
   const inputNameRef = useRef<HTMLInputElement>(null);
   const inputBreedRef = useRef<HTMLInputElement>(null);
   const inputFileRef = useRef<HTMLInputElement>(null);
@@ -37,6 +37,7 @@ export default function NewDogForm() {
       body: JSON.stringify({
         name,
         breed,
+        orgId,
         ownerId: userId!,
         contentDisposition: blobResult.contentDisposition,
         contentType: blobResult.contentType,

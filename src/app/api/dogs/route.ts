@@ -3,13 +3,14 @@ import { type Dog, type Blob } from "@prisma/client";
 import { db } from "@/lib/db";
 
 export async function POST(req: NextRequest) {
-  const { name, breed, ownerId, contentDisposition, contentType, downloadUrl, pathname, url }: Dog & Blob = await req.json();
+  const { name, breed, ownerId, orgId, contentDisposition, contentType, downloadUrl, pathname, url }: Dog & Blob = await req.json();
 
   const dog = await db.dog.create({
     data: {
       name,
       breed,
-      ownerId
+      ownerId,
+      orgId
     }
   })
   const image = await db.blob.create({
