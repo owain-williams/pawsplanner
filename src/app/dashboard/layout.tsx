@@ -108,7 +108,7 @@ export default async function DashboardLayout({
               </div>
             </form>
           </div>
-          <UserButton />
+          <UserButton afterSignOutUrl="/" />
           {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="secondary" size="icon" className="rounded-full">
