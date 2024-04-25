@@ -1,8 +1,10 @@
-import { DataTable } from "@/components/ui/data-table";
+import { Button } from "@/components/ui/button";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
+import Link from "next/link";
 
 import { Booking, columns } from "./columns";
+import { DataTable } from "./data-table";
 
 export default async function AdminBookingsPage() {
   const { orgId } = auth();
@@ -30,7 +32,12 @@ export default async function AdminBookingsPage() {
 
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-      <h1 className="text-lg font-semibold md:text-2xl">Bookings</h1>
+      <div className="flex items-center gap-8">
+        <h1 className="text-lg font-semibold md:text-2xl">Bookings</h1>
+        <Button asChild>
+          <Link href="/dashboard/bookings/new">+ New Booking</Link>
+        </Button>
+      </div>
       <DataTable data={data} columns={columns} />
     </main>
   );

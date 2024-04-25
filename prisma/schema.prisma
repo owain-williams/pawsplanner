@@ -21,6 +21,7 @@ model User {
   updatedAt DateTime        @updatedAt
   stripe    StripeCustomer?
   dogs      Dog[]
+  Booking   Booking[]
 
   @@id([clerkId])
 }
@@ -46,7 +47,9 @@ model Dog {
   id           String       @id @default(cuid())
   name         String
   breed        String
+  archived     Boolean      @default(false)
   canBook      Boolean      @default(false)
+  orgId        String?
   canBookUntil DateTime?
   image        Blob[]
   metadata     DogMetadata?
@@ -107,6 +110,8 @@ model Booking {
   date       DateTime
   slot       Service  @relation(fields: [serviceId], references: [id])
   isPaid     Boolean
+  madeBy     User     @relation(fields: [clerkId], references: [clerkId])
+  clerkId    String
   payment    Payment? @relation(fields: [paymentId], references: [id])
   paymentId  String?
   createdAt  DateTime @default(now())

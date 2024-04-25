@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import type { DogWithImageAndMetadata } from "@/lib/types";
 import { auth } from "@clerk/nextjs";
 import Link from "next/link";
+
 import DogDisplay from "./_components/dogdisplay";
 
 export default async function DogsPage() {
