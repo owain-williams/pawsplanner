@@ -1,30 +1,9 @@
 "use client";
 
-import { DogWithImageAndMetadata } from "@/lib/types";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { GetAvailableSlotsType } from "../page";
+import addToBasket from "@/actions/add-to-basket";
+import getAvailableSlots from "@/actions/get-available-slots";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
-import { format, add } from "date-fns";
-import { cn } from "@/lib/utils";
 import {
   Command,
   CommandEmpty,
@@ -32,11 +11,29 @@ import {
   CommandInput,
   CommandItem,
 } from "@/components/ui/command";
-import { useEffect, useState, useTransition } from "react";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { DogWithImageAndMetadata } from "@/lib/types";
+import { cn } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Service } from "@prisma/client";
-import getAvailableSlots from "@/actions/get-available-slots";
-import addToBasket from "@/actions/add-to-basket";
+import { add, format } from "date-fns";
+import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const formSchema = z.object({
   dogId: z.string({ required_error: "Please select a dog" }),
@@ -75,7 +72,7 @@ export default function NewBookingForm({
         selectedDate,
         selectedDogId,
         orgId,
-        userId
+        userId,
       );
       setAvailableSlots(slots);
     });
@@ -121,7 +118,7 @@ export default function NewBookingForm({
                           variant={"outline"}
                           className={cn(
                             "w-[279px] pl-3 text-left font-normal",
-                            !field.value && "text-muted-foreground"
+                            !field.value && "text-muted-foreground",
                           )}
                         >
                           {field.value ? (
@@ -165,7 +162,7 @@ export default function NewBookingForm({
                       role="combobox"
                       className={cn(
                         "w-[279px] justify-between",
-                        !field.value && "text-muted-foreground"
+                        !field.value && "text-muted-foreground",
                       )}
                     >
                       {field.value
@@ -194,7 +191,7 @@ export default function NewBookingForm({
                               "mr-2 h-4 w-4",
                               dog.value === field.value
                                 ? "opacity-100"
-                                : "opacity-0"
+                                : "opacity-0",
                             )}
                           />
                           {dog.label}
@@ -223,7 +220,7 @@ export default function NewBookingForm({
                       role="combobox"
                       className={cn(
                         "w-[279px] justify-between",
-                        !field.value && "text-muted-foreground"
+                        !field.value && "text-muted-foreground",
                       )}
                     >
                       {field.value
@@ -252,7 +249,7 @@ export default function NewBookingForm({
                               "mr-2 h-4 w-4",
                               slot.value === field.value
                                 ? "opacity-100"
-                                : "opacity-0"
+                                : "opacity-0",
                             )}
                           />
                           {slot.label}
