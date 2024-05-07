@@ -28,6 +28,7 @@ export default async function NewBookingsPage() {
     where: {
       archived: false,
       orgId,
+      canBook: true,
     },
     include: {
       image: true,
