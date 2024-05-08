@@ -1,6 +1,6 @@
 "use client";
 
-import addCustomerDetails from "@/actions/add-customer-details";
+import { addCustomerDetails } from "@/actions/add-customer-details";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -32,7 +32,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CustomerDetails } from "@prisma/client";
 import { iso31661 } from "iso-3166";
 import { Check, ChevronsUpDown } from "lucide-react";
+import { useAction } from "next-safe-action/hooks";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -66,6 +68,19 @@ export default function AddCustomerDetailsForm({
       country: customerDetails?.country || "GB",
     },
   });
+  const {
+    execute: executeAddCustomerDetails,
+    status: statusAddCustomerDetails,
+    result: resultAddCustomerDetails,
+    reset: resetAddCustomerDetails,
+  } = useAction(addCustomerDetails);
+
+  const [disableFormFields, setDisableFormFields] = useState<boolean>(false);
+  useEffect(() => {
+    statusAddCustomerDetails === "executing"
+      ? setDisableFormFields(true)
+      : setDisableFormFields(false);
+  }, [statusAddCustomerDetails]);
 
   const { push } = useRouter();
   const { userId } = useAuth();
@@ -92,8 +107,7 @@ export default function AddCustomerDetailsForm({
       country: values.country,
       userId: userId || "",
     };
-    addCustomerDetails(data);
-    push("/");
+    executeAddCustomerDetails(data);
   }
 
   return (
@@ -241,6 +255,15 @@ export default function AddCustomerDetailsForm({
           )}
         />
         <Button type="submit">Submit</Button>
+        <p className="text-destructive">
+          {resultAddCustomerDetails.fetchError}
+        </p>
+        <p className="text-destructive">
+          {resultAddCustomerDetails.serverError}
+        </p>
+        <p className="text-destructive">
+          {resultAddCustomerDetails.validationErrors?._root}
+        </p>
       </form>
     </Form>
   );
