@@ -115,7 +115,12 @@ export default function CustomerDetailsForm({
     form.setValue("postcode", resultGetCustomerDetails.data?.postcode || "");
     form.setValue("country", resultGetCustomerDetails.data?.country || "");
     console.log(resultGetCustomerDetails.data);
-  }, [selectedUserId]);
+  }, [
+    selectedUserId,
+    executeGetCustomerDetails,
+    form,
+    resultGetCustomerDetails.data,
+  ]);
 
   const countries = iso31661
     .map((country) => ({

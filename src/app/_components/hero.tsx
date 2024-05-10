@@ -22,7 +22,7 @@ export default function Hero() {
                 <Link href="/sign-up">Sign Up</Link>
               </Button>
               <Button asChild variant={"outline"}>
-                <Link href="/sign-in">Sign In</Link>
+                <Link href="/sign-in" data-testid="signIn">Sign In</Link>
               </Button>
               <Button asChild variant={"secondary"}>
                 <Link href="/contact">Request a Demo</Link>

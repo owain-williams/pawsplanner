@@ -62,11 +62,23 @@ export default function NewDogForm() {
         <form onSubmit={handleSubmit} className="pt-8">
           <div className="py-2">
             <label htmlFor="name">Dog&apos;s Name</label>
-            <Input name="name" ref={inputNameRef} type="text" required />
+            <Input
+              name="name"
+              ref={inputNameRef}
+              type="text"
+              data-testid="dogName"
+              required
+            />
           </div>
           <div className="py-2">
             <label htmlFor="breed">Dog&apos;s Breed</label>
-            <Input name="breed" ref={inputBreedRef} type="text" required />
+            <Input
+              name="breed"
+              ref={inputBreedRef}
+              type="text"
+              data-testid="dogBreed"
+              required
+            />
           </div>
           <div className="py-2">
             <label htmlFor="file">Dog&apos;s Avatar</label>
@@ -75,9 +87,12 @@ export default function NewDogForm() {
               ref={inputFileRef}
               type="file"
               accept="image/*"
+              data-testid="dogAvatar"
             />
             <div className="py-2">
-              <Button type="submit">Submit</Button>
+              <Button type="submit" data-testid="submit">
+                Submit
+              </Button>
             </div>
           </div>
         </form>
